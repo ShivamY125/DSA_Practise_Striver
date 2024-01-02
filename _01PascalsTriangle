@@ -1,0 +1,205 @@
+type 1: - To find Element at the given position Ex: If we want to find element at row  = 10, col = 3 in pascals triangle answer is 120.
+// Brute force solution
+
+import java.util.*;
+
+public class Main
+{
+    public static int findnCr(int n, int r){
+        int res = 1;
+        
+        for(int i=0;i<r;i++){
+            res = res*(n-i);    // intially res = 1*(10-0) = 10  next round:-  10/1*(10-1) = 10*9      next round: -  10*9/2*(10-2) = 10*9*8/2
+             res = res/(i+1);  //   res = 10/(0+1) =10/1                     10*9 / (1+1) = 10*9/2                   5*9*8 /(2+1) = 5*9*8/3  =120
+        }
+        
+        return res;
+    }
+    
+	public static void main(String[] args) {
+	Scanner s = new Scanner(System.in);
+	
+	int n = s.nextInt();
+	int r = s.nextInt();
+	
+	int out = findnCr(n,r);
+	System.out.println(out);
+	
+	
+		}
+}
+
+
+// type 2:-  we have been given a row no and we have to print all the elemnt of pascaals triangle in this row?
+
+import java.util.*;
+
+public class tUf {
+
+    static void pascalTriangle(int n) {
+        long ans = 1;
+        System.out.print(ans + " "); // printing 1st element
+
+        // Printing the rest of the part:
+        for (int i = 1; i < n; i++) {                   // At every position we are just appending (n-i)/i extra ; 1*5/1   , 5*4/1*2 , 5*4*3/1*2*3 etc.  
+            ans = ans * (n - i);
+            ans = ans / i;
+            System.out.print(ans + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        int n = 5;
+        pascalTriangle(n);
+    }
+}
+
+
+//  type 3: We are giving n = 5 we need to print whole pascals triangle of 5 rows adn 5 columns either in 2D array or in 2D arrayList.
+// time complexity is O(n^3).
+import java.util.*;
+class Solution {
+
+    public static int findnCr(int n, int r){   // this is the brute force solution of finding element at specific position. 
+        int res = 1;                           // We are finding element at specific position and then each element is being added in list, and then whole list is added in another 2D list.
+
+        for(int i=0;i<r;i++){
+            res = res*(n-i);
+            res = res/(i+1);
+        }
+
+        return (int)res;
+    }
+
+
+
+
+    public List<List<Integer>> generate(int n) {
+      
+      List<List<Integer>> ans = new ArrayList<>();
+        int row = 1;
+      for(row = 1;row<=n;row++){
+           List<Integer> templist = new ArrayList<>();
+         int col=1;
+        for(col=1;col<=row;col++){
+
+            int value = findnCr(row-1, col-1);
+            templist.add(value);
+             
+
+
+        }
+        ans.add(templist);
+    }
+
+    return ans;
+
+
+    }
+}
+
+// Type 3: - Using Array instead of list
+import java.util.*;
+public class Solution {
+    
+        public static int findnCr(int n, int r){
+        int res = 1;
+
+        for(int i=0;i<r;i++){
+            res = res*(n-i);
+            res = res/(i+1);
+        }
+
+        return (int)res;
+    }
+
+
+
+    public static int[][] pascalTriangle(int n) {
+        // Write your code here.
+
+
+          int ans[][] = new int[n][];
+    
+        int j = 0;
+      for(int row = 1;row<=n;row++){
+          int templist[] = new int[row];
+         
+         int k=0;
+        for(int col=1;col<=row;col++){
+
+            int value = findnCr(row-1, col-1);
+            
+             templist[k++] = value;
+
+
+        }
+        ans[j++] = templist; 
+    }
+
+    return ans;
+    }
+}
+
+
+
+// optimal solution of type 3:- we need to create whole column once and add whole columm templIst together in ans 2D array.
+   // here we are using type-2 to fetch whole column.
+// time complexity will be O(n^2).
+
+
+import java.util.*;
+public class Solution {
+    
+        public static int[] findnCr(int row){
+         long ans = 1;
+        
+        int templist[] = new int[row];
+           templist[0] = 1;
+           int k=1;
+        for( int i=1; i<row;i++){
+            ans = ans*(row-i);
+            ans = ans/(i);
+            templist[k++] = (int)ans;
+        }   
+
+        return templist;
+    }
+
+
+
+    public static int[][] pascalTriangle(int n) {
+        // Write your code here.
+
+
+          int ans[][] = new int[n][];
+            int j = 0;
+          for(int i=1;i<=n;i++){
+            ans[i-1] = findnCr(i);
+          }
+        
+        
+    return ans;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
